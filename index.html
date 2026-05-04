@@ -61,6 +61,7 @@
       <h1>Calculadora USDT Venezuela</h1>
       <p>Solo USDT y bolívares. Sin pesos colombianos.</p>
     </div>
+
     <div class="content">
       <div class="left">
         <div class="grid">
@@ -68,10 +69,12 @@
             <label for="dolares_base">Monto base en USDT</label>
             <input id="dolares_base" type="text" placeholder="Ejemplo: 1000">
           </div>
+
           <div class="field">
             <label for="bolivar_usd">Precio del bolívar por USDT en Binance</label>
             <input id="bolivar_usd" type="text" placeholder="Ejemplo: 636">
           </div>
+
           <div class="field full">
             <label for="tasa_subasta">Tasa de subasta del banco</label>
             <input id="tasa_subasta" type="text" placeholder="Ejemplo: 571">
@@ -87,7 +90,10 @@
 
         <div id="estado" class="status"></div>
         <pre id="resultado">Aquí aparecerán los resultados.</pre>
-        <div class="foot">Comisiones usadas: sobre USDT finales = 7,3 %; comisión de compra en bolívares = 0,5 %; total informativo del negocio = 7,8 %.</div>
+
+        <div class="foot">
+          Comisiones usadas: sobre USDT finales = 5,8 %; comisión de compra en bolívares = 0,5 %; total informativo del negocio = 6,3 %.
+        </div>
       </div>
 
       <div class="right">
@@ -96,46 +102,47 @@
             <div class="k">Ganancia final</div>
             <div class="v" id="ganancia_card">-</div>
           </div>
+
           <div class="mini">
             <div class="k">Rentabilidad</div>
             <div class="v" id="rentabilidad_card">-</div>
           </div>
+
           <div class="mini small">
             <div class="k">Punto de equilibrio</div>
             <div class="v" id="equilibrio_card">-</div>
           </div>
+
           <div class="mini small">
             <div class="k">USDT finales después de comisiones</div>
             <div class="v" id="usd_finales_card">-</div>
           </div>
+
           <div class="mini small">
             <div class="k">Costo real en USDT</div>
             <div class="v" id="costo_real_card">-</div>
           </div>
+
           <div class="mini small">
             <div class="k">Comisión banco</div>
             <div class="v" id="comision_banco_card">2,5 %</div>
           </div>
-          <div class="mini small">
-            <div class="k">Comisión Persona</div>
-            <div class="v" id="comision_persona_card">1,0 %</div>
-          </div>
+
           <div class="mini small">
             <div class="k">Comisión Raspe</div>
             <div class="v" id="comision_raspe_card">3,3 %</div>
           </div>
-          <div class="mini small">
-            <div class="k">Comisión Angeli</div>
-            <div class="v" id="comision_angeli_card">0,5 %</div>
-          </div>
+
           <div class="mini small">
             <div class="k">Comisión compra</div>
             <div class="v" id="comision_compra_card">0,5 %</div>
           </div>
+
           <div class="mini small">
             <div class="k">Comisiones sobre USDT final</div>
             <div class="v" id="comision_total_usd_card">-</div>
           </div>
+
           <div class="mini small">
             <div class="k">Total informativo del negocio</div>
             <div class="v" id="comision_total_card">-</div>
@@ -149,9 +156,14 @@
 <script>
 function limpiarNumero(texto){
   texto = String(texto).replace(/\s/g, "");
-  if (texto === "") throw new Error("Hay campos vacíos.");
+
+  if (texto === "") {
+    throw new Error("Hay campos vacíos.");
+  }
+
   var tienePunto = texto.indexOf(".") !== -1;
   var tieneComa = texto.indexOf(",") !== -1;
+
   if (tienePunto && tieneComa){
     if (texto.lastIndexOf(",") > texto.lastIndexOf(".")){
       texto = texto.replace(/\./g, "");
@@ -170,24 +182,33 @@ function limpiarNumero(texto){
       texto = texto.replace(/\./g, "");
     }
   }
+
   var valor = parseFloat(texto);
-  if (isNaN(valor)) throw new Error("Hay un dato inválido.");
+
+  if (isNaN(valor)) {
+    throw new Error("Hay un dato inválido.");
+  }
+
   return valor;
 }
 
 function formatoDecimal(valor, decimales){
   var negativo = valor < 0;
   valor = Math.abs(valor);
+
   var fijo = valor.toFixed(decimales);
   var partes = fijo.split(".");
   var entero = partes[0];
   var decimal = partes.length > 1 ? partes[1] : "";
   var out = "";
+
   while (entero.length > 3){
     out = "." + entero.slice(-3) + out;
     entero = entero.slice(0, -3);
   }
+
   out = entero + out;
+
   return (negativo ? "-" : "") + out + (decimales > 0 ? "," + decimal : "");
 }
 
@@ -208,18 +229,17 @@ function calcular(){
     }
 
     var bolivares_subasta = dolares_base * tasa_subasta;
-    var comision_compra_bs = bolivares_subasta * 0.005;
-    var total_bolivares_pagados = bolivares_subasta + comision_compra_bs;
 
+    var comision_compra = 0.5;
+    var comision_compra_bs = bolivares_subasta * (comision_compra / 100);
+
+    var total_bolivares_pagados = bolivares_subasta + comision_compra_bs;
     var costo_real_usdt = total_bolivares_pagados / bolivar_usd;
 
     var comision_banco = 2.5;
-    var comision_persona = 1.0;
     var comision_raspe = 3.3;
-    var comision_angeli = 0.5;
-    var comision_compra = 0.5;
 
-    var comision_total_usd = comision_banco + comision_persona + comision_raspe + comision_angeli;
+    var comision_total_usd = comision_banco + comision_raspe;
     var comision_total = comision_total_usd + comision_compra;
 
     var usd_finales = dolares_base * (1 - comision_total_usd / 100);
@@ -243,40 +263,46 @@ function calcular(){
     document.getElementById("equilibrio_card").textContent = formatoDecimal(punto_equilibrio, 4) + " USDT";
     document.getElementById("usd_finales_card").textContent = formatoDecimal(usd_finales, 3) + " USDT";
     document.getElementById("costo_real_card").textContent = formatoDecimal(costo_real_usdt, 3) + " USDT";
+
     document.getElementById("comision_banco_card").textContent = formatoDecimal(comision_banco, 1) + " %";
-    document.getElementById("comision_persona_card").textContent = formatoDecimal(comision_persona, 1) + " %";
     document.getElementById("comision_raspe_card").textContent = formatoDecimal(comision_raspe, 1) + " %";
-    document.getElementById("comision_angeli_card").textContent = formatoDecimal(comision_angeli, 1) + " %";
     document.getElementById("comision_compra_card").textContent = formatoDecimal(comision_compra, 1) + " %";
     document.getElementById("comision_total_usd_card").textContent = formatoDecimal(comision_total_usd, 2) + " %";
     document.getElementById("comision_total_card").textContent = formatoDecimal(comision_total, 2) + " %";
 
     var salida = "";
+
     salida += "=======================================================\n";
     salida += "RESULTADOS - MODO USDT PURO\n";
     salida += "=======================================================\n\n";
+
     salida += "Si compras " + formatoDecimal(dolares_base, 3) + " USDT a una tasa de " + formatoDecimal(tasa_subasta, 2) + " Bs/USD\n";
     salida += "Pagas en subasta: " + formatoDecimal(bolivares_subasta, 3) + " Bs\n";
     salida += "Comisión de compra: " + formatoDecimal(comision_compra_bs, 3) + " Bs\n";
     salida += "Total bolívares pagados: " + formatoDecimal(total_bolivares_pagados, 3) + " Bs\n\n";
+
     salida += "Al precio de Binance esos bolívares equivalen a: " + formatoDecimal(costo_real_usdt, 3) + " USDT\n\n";
+
     salida += "Comisiones del proceso:\n";
-    salida += "- Banco: 2,5 %\n";
-    salida += "- Persona: 1,0 %\n";
-    salida += "- Raspe de tarjeta: 3,3 %\n";
-    salida += "- Angeli: 0,5 %\n";
-    salida += "Total sobre USDT final: " + formatoDecimal(comision_total_usd, 2) + "%\n";
-    salida += "Total informativo del negocio: " + formatoDecimal(comision_total, 2) + "%\n\n";
+    salida += "- Banco: " + formatoDecimal(comision_banco, 1) + " %\n";
+    salida += "- Raspe de tarjeta: " + formatoDecimal(comision_raspe, 1) + " %\n";
+    salida += "- Compra en bolívares: " + formatoDecimal(comision_compra, 1) + " %\n";
+    salida += "Total sobre USDT final: " + formatoDecimal(comision_total_usd, 2) + " %\n";
+    salida += "Total informativo del negocio: " + formatoDecimal(comision_total, 2) + " %\n\n";
+
     salida += "USDT finales después de comisiones: " + formatoDecimal(usd_finales, 3) + " USDT\n";
     salida += "Costo real de la operación: " + formatoDecimal(costo_real_usdt, 3) + " USDT\n";
     salida += "Punto de equilibrio: " + formatoDecimal(punto_equilibrio, 4) + " USDT por cada 1 USDT base\n\n";
+
     salida += "Ganancia final: " + formatoDecimal(ganancia_usdt, 3) + " USDT\n";
     salida += "Rentabilidad: " + formatoDecimal(porcentaje_ganancia, 2) + "%\n";
     salida += "=======================================================";
 
     document.getElementById("resultado").textContent = salida;
+
   } catch (e){
     setEstado("lose", "Error: " + e.message);
+
     document.getElementById("resultado").textContent =
       "Escribe los números así:\n" +
       "- 1000\n" +
@@ -292,32 +318,44 @@ function limpiarFormulario(){
   document.getElementById("dolares_base").value = "";
   document.getElementById("bolivar_usd").value = "";
   document.getElementById("tasa_subasta").value = "";
+
   document.getElementById("resultado").textContent = "Aquí aparecerán los resultados.";
+
   var gananciaCard = document.getElementById("ganancia_card");
   gananciaCard.textContent = "-";
   gananciaCard.className = "v";
+
   document.getElementById("rentabilidad_card").textContent = "-";
   document.getElementById("equilibrio_card").textContent = "-";
   document.getElementById("usd_finales_card").textContent = "-";
   document.getElementById("costo_real_card").textContent = "-";
+
   document.getElementById("comision_banco_card").textContent = "2,5 %";
-  document.getElementById("comision_persona_card").textContent = "1,0 %";
   document.getElementById("comision_raspe_card").textContent = "3,3 %";
-  document.getElementById("comision_angeli_card").textContent = "0,5 %";
   document.getElementById("comision_compra_card").textContent = "0,5 %";
   document.getElementById("comision_total_usd_card").textContent = "-";
   document.getElementById("comision_total_card").textContent = "-";
+
   document.getElementById("estado").className = "status";
+  document.getElementById("estado").textContent = "";
 }
 
 function copiarResultado(){
   var texto = document.getElementById("resultado").textContent;
+
   if (!texto || texto === "Aquí aparecerán los resultados."){
     alert("Primero calcula un resultado.");
     return;
   }
+
   if (navigator.clipboard && window.isSecureContext){
-    navigator.clipboard.writeText(texto).then(function(){ alert("Resultado copiado."); }).catch(function(){ copiarFallback(texto); });
+    navigator.clipboard.writeText(texto)
+      .then(function(){
+        alert("Resultado copiado.");
+      })
+      .catch(function(){
+        copiarFallback(texto);
+      });
   } else {
     copiarFallback(texto);
   }
@@ -328,12 +366,14 @@ function copiarFallback(texto){
   area.value = texto;
   document.body.appendChild(area);
   area.select();
+
   try{
     document.execCommand("copy");
     alert("Resultado copiado.");
   } catch(e){
     alert("No se pudo copiar automáticamente.");
   }
+
   document.body.removeChild(area);
 }
 </script>
