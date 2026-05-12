@@ -8,15 +8,31 @@
   :root{
     --bg:#0f172a; --card:#ffffff; --text:#0f172a; --muted:#475569; --line:#dbe3ee;
     --primary:#2563eb; --secondary:#64748b; --success:#22c55e; --success-bg:#dcfce7;
-    --success-text:#22c55e; --warn-bg:#fef3c7; --warn-text:#92400e; --danger-bg:#fee2e2; --danger-text:#991b1b;
+    --success-text:#15803d; --warn-bg:#fef3c7; --warn-text:#92400e; --danger-bg:#fee2e2; --danger-text:#991b1b;
+    --orange:#f97316;
   }
   *{box-sizing:border-box}
-  body{margin:0;font-family:Segoe UI, Arial, sans-serif;background:linear-gradient(135deg,#e2e8f0 0%,#f8fafc 100%);color:var(--text);}
+  body{
+    margin:0;
+    font-family:Segoe UI, Arial, sans-serif;
+    background:linear-gradient(135deg,#e2e8f0 0%,#f8fafc 100%);
+    color:var(--text);
+  }
   .wrap{max-width:980px;margin:32px auto;padding:0 16px;}
-  .shell{background:var(--card);border-radius:24px;box-shadow:0 20px 60px rgba(15,23,42,.15);overflow:hidden;border:1px solid #e5e7eb;}
-  .hero{background:linear-gradient(135deg,#facc15 0%,#1d4ed8 50%,#dc2626 100%);color:white;padding:28px;}
+  .shell{
+    background:var(--card);
+    border-radius:24px;
+    box-shadow:0 20px 60px rgba(15,23,42,.15);
+    overflow:hidden;
+    border:1px solid #e5e7eb;
+  }
+  .hero{
+    background:linear-gradient(135deg,#facc15 0%,#1d4ed8 50%,#dc2626 100%);
+    color:white;
+    padding:28px;
+  }
   .hero h1{margin:0 0 8px 0;font-size:34px;}
-  .hero p{margin:0;color:#334155;font-size:15px;}
+  .hero p{margin:0;color:#f8fafc;font-size:15px;}
   .content{display:grid;grid-template-columns:1.1fr 0.9fr;gap:0;}
   .left,.right{padding:24px;}
   .right{background:#f8fafc;border-left:1px solid var(--line);}
@@ -24,11 +40,27 @@
   .field{margin-bottom:14px;}
   .field.full{grid-column:1 / -1;}
   label{display:block;font-weight:700;margin-bottom:6px;font-size:14px;}
-  input{width:100%;border:1px solid #cbd5e1;background:white;border-radius:14px;padding:12px 14px;font-size:16px;outline:none;transition:.2s;}
+  input{
+    width:100%;
+    border:1px solid #cbd5e1;
+    background:white;
+    border-radius:14px;
+    padding:12px 14px;
+    font-size:16px;
+    outline:none;
+    transition:.2s;
+  }
   input:focus{border-color:#34d399;box-shadow:0 0 0 4px rgba(16,185,129,.12);}
   .hint{font-size:12px;color:var(--muted);margin-top:4px;}
   .btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;}
-  button{border:none;border-radius:14px;padding:12px 16px;font-size:15px;font-weight:700;cursor:pointer;}
+  button{
+    border:none;
+    border-radius:14px;
+    padding:12px 16px;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+  }
   .primary{background:var(--primary);color:white;}
   .secondary{background:var(--secondary);color:white;}
   .success{background:#059669;color:white;}
@@ -41,10 +73,22 @@
   .mini .k{color:var(--muted);font-size:13px;margin-bottom:6px;}
   .mini .v{font-size:26px;font-weight:800;}
   .mini.small .v{font-size:20px;}
-  .ganancia-win{color:#22c55e;}
+  .ganancia-win{color:#16a34a;}
   .ganancia-lose{color:#991b1b;}
   .ganancia-tie{color:#92400e;}
-  pre{margin:16px 0 0 0;white-space:pre-wrap;background:var(--bg);color:#f8fafc;border-radius:18px;padding:18px;min-height:280px;font-family:Consolas, monospace;font-size:14px;line-height:1.5;}
+  .orange{color:var(--orange);font-weight:800;}
+  .resultado-box{
+    margin:16px 0 0 0;
+    background:var(--bg);
+    color:#f8fafc;
+    border-radius:18px;
+    padding:18px;
+    min-height:280px;
+    font-family:Consolas, monospace;
+    font-size:14px;
+    line-height:1.55;
+    white-space:pre-wrap;
+  }
   .foot{margin-top:14px;font-size:12px;color:var(--muted);}
   @media (max-width:860px){
     .content{grid-template-columns:1fr;}
@@ -72,12 +116,12 @@
 
           <div class="field">
             <label for="bolivar_usd">Precio del bolívar por USDT en Binance</label>
-            <input id="bolivar_usd" type="text" placeholder="Ejemplo: 636">
+            <input id="bolivar_usd" type="text" placeholder="Ejemplo: 670">
           </div>
 
           <div class="field full">
-            <label for="tasa_subasta">Tasa de subasta del banco</label>
-            <input id="tasa_subasta" type="text" placeholder="Ejemplo: 571">
+            <label for="tasa_subasta">Tasa de intervención del banco</label>
+            <input id="tasa_subasta" type="text" placeholder="Ejemplo: 611">
             <div class="hint">Acepta formatos como 1000, 1.000, 1,000, 1.000,50 o 1000.50</div>
           </div>
         </div>
@@ -89,10 +133,10 @@
         </div>
 
         <div id="estado" class="status"></div>
-        <pre id="resultado">Aquí aparecerán los resultados.</pre>
+        <div id="resultado" class="resultado-box">Aquí aparecerán los resultados.</div>
 
         <div class="foot">
-          Comisiones usadas: sobre USDT finales = 5,8 %; comisión de compra en bolívares = 0,5 %; total informativo del negocio = 6,3 %.
+          Comisiones usadas: Banco 2,5 % + Binance 3,6 %. Comisión de compra en bolívares: 0,5 %.
         </div>
       </div>
 
@@ -109,18 +153,13 @@
           </div>
 
           <div class="mini small">
-            <div class="k">Punto de equilibrio</div>
-            <div class="v" id="equilibrio_card">-</div>
+            <div class="k">Bolívares equivalentes en Binance</div>
+            <div class="v orange" id="costo_real_card">-</div>
           </div>
 
           <div class="mini small">
             <div class="k">USDT finales después de comisiones</div>
-            <div class="v" id="usd_finales_card">-</div>
-          </div>
-
-          <div class="mini small">
-            <div class="k">Costo real en USDT</div>
-            <div class="v" id="costo_real_card">-</div>
+            <div class="v orange" id="usd_finales_card">-</div>
           </div>
 
           <div class="mini small">
@@ -129,23 +168,13 @@
           </div>
 
           <div class="mini small">
-            <div class="k">Comisión Raspe</div>
-            <div class="v" id="comision_raspe_card">3,3 %</div>
+            <div class="k">Comisión Binance</div>
+            <div class="v" id="comision_binance_card">3,6 %</div>
           </div>
 
           <div class="mini small">
             <div class="k">Comisión compra</div>
             <div class="v" id="comision_compra_card">0,5 %</div>
-          </div>
-
-          <div class="mini small">
-            <div class="k">Comisiones sobre USDT final</div>
-            <div class="v" id="comision_total_usd_card">-</div>
-          </div>
-
-          <div class="mini small">
-            <div class="k">Total informativo del negocio</div>
-            <div class="v" id="comision_total_card">-</div>
           </div>
         </div>
       </div>
@@ -154,6 +183,8 @@
 </div>
 
 <script>
+var ultimoResultadoTexto = "";
+
 function limpiarNumero(texto){
   texto = String(texto).replace(/\s/g, "");
 
@@ -228,24 +259,21 @@ function calcular(){
       throw new Error("Todos los valores deben ser mayores que cero.");
     }
 
-    var bolivares_subasta = dolares_base * tasa_subasta;
+    var bolivares_intervencion = dolares_base * tasa_subasta;
 
     var comision_compra = 0.5;
-    var comision_compra_bs = bolivares_subasta * (comision_compra / 100);
+    var comision_compra_bs = bolivares_intervencion * (comision_compra / 100);
 
-    var total_bolivares_pagados = bolivares_subasta + comision_compra_bs;
+    var total_bolivares_pagados = bolivares_intervencion + comision_compra_bs;
     var costo_real_usdt = total_bolivares_pagados / bolivar_usd;
 
     var comision_banco = 2.5;
-    var comision_raspe = 3.3;
-
-    var comision_total_usd = comision_banco + comision_raspe;
-    var comision_total = comision_total_usd + comision_compra;
+    var comision_binance = 3.6;
+    var comision_total_usd = comision_banco + comision_binance;
 
     var usd_finales = dolares_base * (1 - comision_total_usd / 100);
     var ganancia_usdt = usd_finales - costo_real_usdt;
     var porcentaje_ganancia = (ganancia_usdt / costo_real_usdt) * 100;
-    var punto_equilibrio = costo_real_usdt / dolares_base;
 
     if (ganancia_usdt > 0){
       setEstado("win", "🟢 Estás ganando dinero en esta operación.");
@@ -256,52 +284,70 @@ function calcular(){
     }
 
     var gananciaCard = document.getElementById("ganancia_card");
-    gananciaCard.textContent = formatoDecimal(ganancia_usdt, 3) + " USDT";
+    gananciaCard.textContent = formatoDecimal(ganancia_usdt, 2) + " USDT";
     gananciaCard.className = "v " + (ganancia_usdt > 0 ? "ganancia-win" : (ganancia_usdt < 0 ? "ganancia-lose" : "ganancia-tie"));
 
     document.getElementById("rentabilidad_card").textContent = formatoDecimal(porcentaje_ganancia, 2) + "%";
-    document.getElementById("equilibrio_card").textContent = formatoDecimal(punto_equilibrio, 4) + " USDT";
-    document.getElementById("usd_finales_card").textContent = formatoDecimal(usd_finales, 3) + " USDT";
-    document.getElementById("costo_real_card").textContent = formatoDecimal(costo_real_usdt, 3) + " USDT";
+    document.getElementById("usd_finales_card").textContent = formatoDecimal(usd_finales, 2) + " USDT";
+    document.getElementById("costo_real_card").textContent = formatoDecimal(costo_real_usdt, 2) + " USDT";
 
     document.getElementById("comision_banco_card").textContent = formatoDecimal(comision_banco, 1) + " %";
-    document.getElementById("comision_raspe_card").textContent = formatoDecimal(comision_raspe, 1) + " %";
+    document.getElementById("comision_binance_card").textContent = formatoDecimal(comision_binance, 1) + " %";
     document.getElementById("comision_compra_card").textContent = formatoDecimal(comision_compra, 1) + " %";
-    document.getElementById("comision_total_usd_card").textContent = formatoDecimal(comision_total_usd, 2) + " %";
-    document.getElementById("comision_total_card").textContent = formatoDecimal(comision_total, 2) + " %";
 
-    var salida = "";
+    var salidaTexto = "";
+    salidaTexto += "=======================================================\n";
+    salidaTexto += "RESULTADOS\n";
+    salidaTexto += "=======================================================\n\n";
 
-    salida += "=======================================================\n";
-    salida += "RESULTADOS - MODO USDT PURO\n";
-    salida += "=======================================================\n\n";
+    salidaTexto += "Si compras " + formatoDecimal(dolares_base, 2) + " USDT a una tasa de " + formatoDecimal(tasa_subasta, 2) + " Bs/USD\n";
+    salidaTexto += "Pagas en intervención: " + formatoDecimal(bolivares_intervencion, 2) + " Bs\n";
+    salidaTexto += "Comisión de compra(" + formatoDecimal(comision_compra, 1) + "%): " + formatoDecimal(comision_compra_bs, 2) + " Bs\n";
+    salidaTexto += "Total bolívares a pagar: " + formatoDecimal(total_bolivares_pagados, 2) + " Bs\n\n";
 
-    salida += "Si compras " + formatoDecimal(dolares_base, 3) + " USDT a una tasa de " + formatoDecimal(tasa_subasta, 2) + " Bs/USD\n";
-    salida += "Pagas en subasta: " + formatoDecimal(bolivares_subasta, 3) + " Bs\n";
-    salida += "Comisión de compra: " + formatoDecimal(comision_compra_bs, 3) + " Bs\n";
-    salida += "Total bolívares pagados: " + formatoDecimal(total_bolivares_pagados, 3) + " Bs\n\n";
+    salidaTexto += "Al precio de Binance esos bolívares equivalen a: " + formatoDecimal(costo_real_usdt, 2) + " USDT\n\n";
 
-    salida += "Al precio de Binance esos bolívares equivalen a: " + formatoDecimal(costo_real_usdt, 3) + " USDT\n\n";
+    salidaTexto += "Comisiones del proceso:\n";
+    salidaTexto += "- Banco: " + formatoDecimal(comision_banco, 1) + " %\n";
+    salidaTexto += "- Binance: " + formatoDecimal(comision_binance, 1) + " %\n\n";
 
-    salida += "Comisiones del proceso:\n";
-    salida += "- Banco: " + formatoDecimal(comision_banco, 1) + " %\n";
-    salida += "- Raspe de tarjeta: " + formatoDecimal(comision_raspe, 1) + " %\n";
-    salida += "- Compra en bolívares: " + formatoDecimal(comision_compra, 1) + " %\n";
-    salida += "Total sobre USDT final: " + formatoDecimal(comision_total_usd, 2) + " %\n";
-    salida += "Total informativo del negocio: " + formatoDecimal(comision_total, 2) + " %\n\n";
+    salidaTexto += "USDT finales después de comisiones: " + formatoDecimal(usd_finales, 2) + " USDT\n\n";
+    salidaTexto += "Costo real de la operación: " + formatoDecimal(costo_real_usdt, 2) + " USDT\n\n\n";
 
-    salida += "USDT finales después de comisiones: " + formatoDecimal(usd_finales, 3) + " USDT\n";
-    salida += "Costo real de la operación: " + formatoDecimal(costo_real_usdt, 3) + " USDT\n";
-    salida += "Punto de equilibrio: " + formatoDecimal(punto_equilibrio, 4) + " USDT por cada 1 USDT base\n\n";
+    salidaTexto += "Ganancia final: " + formatoDecimal(ganancia_usdt, 2) + " USDT\n\n";
+    salidaTexto += "Rentabilidad: " + formatoDecimal(porcentaje_ganancia, 2) + "%\n";
+    salidaTexto += "=======================================================";
 
-    salida += "Ganancia final: " + formatoDecimal(ganancia_usdt, 3) + " USDT\n";
-    salida += "Rentabilidad: " + formatoDecimal(porcentaje_ganancia, 2) + "%\n";
-    salida += "=======================================================";
+    ultimoResultadoTexto = salidaTexto;
 
-    document.getElementById("resultado").textContent = salida;
+    var salidaHtml = "";
+    salidaHtml += "=======================================================\n";
+    salidaHtml += "RESULTADOS\n";
+    salidaHtml += "=======================================================\n\n";
+
+    salidaHtml += "Si compras " + formatoDecimal(dolares_base, 2) + " USDT a una tasa de " + formatoDecimal(tasa_subasta, 2) + " Bs/USD\n";
+    salidaHtml += "Pagas en intervención: " + formatoDecimal(bolivares_intervencion, 2) + " Bs\n";
+    salidaHtml += "Comisión de compra(" + formatoDecimal(comision_compra, 1) + "%): " + formatoDecimal(comision_compra_bs, 2) + " Bs\n";
+    salidaHtml += "Total bolívares a pagar: " + formatoDecimal(total_bolivares_pagados, 2) + " Bs\n\n";
+
+    salidaHtml += 'Al precio de Binance esos bolívares equivalen a: <span class="orange">' + formatoDecimal(costo_real_usdt, 2) + " USDT</span>\n\n";
+
+    salidaHtml += "Comisiones del proceso:\n";
+    salidaHtml += "- Banco: " + formatoDecimal(comision_banco, 1) + " %\n";
+    salidaHtml += "- Binance: " + formatoDecimal(comision_binance, 1) + " %\n\n";
+
+    salidaHtml += 'USDT finales después de comisiones: <span class="orange">' + formatoDecimal(usd_finales, 2) + " USDT</span>\n\n";
+    salidaHtml += "Costo real de la operación: " + formatoDecimal(costo_real_usdt, 2) + " USDT\n\n\n";
+
+    salidaHtml += "Ganancia final: " + formatoDecimal(ganancia_usdt, 2) + " USDT\n\n";
+    salidaHtml += "Rentabilidad: " + formatoDecimal(porcentaje_ganancia, 2) + "%\n";
+    salidaHtml += "=======================================================";
+
+    document.getElementById("resultado").innerHTML = salidaHtml;
 
   } catch (e){
     setEstado("lose", "Error: " + e.message);
+    ultimoResultadoTexto = "";
 
     document.getElementById("resultado").textContent =
       "Escribe los números así:\n" +
@@ -320,28 +366,26 @@ function limpiarFormulario(){
   document.getElementById("tasa_subasta").value = "";
 
   document.getElementById("resultado").textContent = "Aquí aparecerán los resultados.";
+  ultimoResultadoTexto = "";
 
   var gananciaCard = document.getElementById("ganancia_card");
   gananciaCard.textContent = "-";
   gananciaCard.className = "v";
 
   document.getElementById("rentabilidad_card").textContent = "-";
-  document.getElementById("equilibrio_card").textContent = "-";
   document.getElementById("usd_finales_card").textContent = "-";
   document.getElementById("costo_real_card").textContent = "-";
 
   document.getElementById("comision_banco_card").textContent = "2,5 %";
-  document.getElementById("comision_raspe_card").textContent = "3,3 %";
+  document.getElementById("comision_binance_card").textContent = "3,6 %";
   document.getElementById("comision_compra_card").textContent = "0,5 %";
-  document.getElementById("comision_total_usd_card").textContent = "-";
-  document.getElementById("comision_total_card").textContent = "-";
 
   document.getElementById("estado").className = "status";
   document.getElementById("estado").textContent = "";
 }
 
 function copiarResultado(){
-  var texto = document.getElementById("resultado").textContent;
+  var texto = ultimoResultadoTexto || document.getElementById("resultado").textContent;
 
   if (!texto || texto === "Aquí aparecerán los resultados."){
     alert("Primero calcula un resultado.");
