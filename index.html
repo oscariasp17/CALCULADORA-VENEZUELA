@@ -1,425 +1,647 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Calculadora USDT Venezuela</title>
-<style>
-  :root{
-    --bg:#0f172a; --card:#ffffff; --text:#0f172a; --muted:#475569; --line:#dbe3ee;
-    --primary:#2563eb; --secondary:#64748b; --success:#22c55e; --success-bg:#dcfce7;
-    --success-text:#15803d; --warn-bg:#fef3c7; --warn-text:#92400e; --danger-bg:#fee2e2; --danger-text:#991b1b;
-    --orange:#f97316;
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0;
-    font-family:Segoe UI, Arial, sans-serif;
-    background:linear-gradient(135deg,#e2e8f0 0%,#f8fafc 100%);
-    color:var(--text);
-  }
-  .wrap{max-width:980px;margin:32px auto;padding:0 16px;}
-  .shell{
-    background:var(--card);
-    border-radius:24px;
-    box-shadow:0 20px 60px rgba(15,23,42,.15);
-    overflow:hidden;
-    border:1px solid #e5e7eb;
-  }
-  .hero{
-    background:linear-gradient(135deg,#facc15 0%,#1d4ed8 50%,#dc2626 100%);
-    color:white;
-    padding:28px;
-  }
-  .hero h1{margin:0 0 8px 0;font-size:34px;}
-  .hero p{margin:0;color:#f8fafc;font-size:15px;}
-  .content{display:grid;grid-template-columns:1.1fr 0.9fr;gap:0;}
-  .left,.right{padding:24px;}
-  .right{background:#f8fafc;border-left:1px solid var(--line);}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-  .field{margin-bottom:14px;}
-  .field.full{grid-column:1 / -1;}
-  label{display:block;font-weight:700;margin-bottom:6px;font-size:14px;}
-  input{
-    width:100%;
-    border:1px solid #cbd5e1;
-    background:white;
-    border-radius:14px;
-    padding:12px 14px;
-    font-size:16px;
-    outline:none;
-    transition:.2s;
-  }
-  input:focus{border-color:#34d399;box-shadow:0 0 0 4px rgba(16,185,129,.12);}
-  .hint{font-size:12px;color:var(--muted);margin-top:4px;}
-  .btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;}
-  button{
-    border:none;
-    border-radius:14px;
-    padding:12px 16px;
-    font-size:15px;
-    font-weight:700;
-    cursor:pointer;
-  }
-  .primary{background:var(--primary);color:white;}
-  .secondary{background:var(--secondary);color:white;}
-  .success{background:#059669;color:white;}
-  .status{display:none;margin-top:16px;padding:14px 16px;border-radius:16px;font-weight:700;}
-  .status.win{display:block;background:var(--success-bg);color:var(--success-text);}
-  .status.tie{display:block;background:var(--warn-bg);color:var(--warn-text);}
-  .status.lose{display:block;background:var(--danger-bg);color:var(--danger-text);}
-  .cards{display:grid;gap:12px;}
-  .mini{background:white;border:1px solid var(--line);border-radius:18px;padding:16px;}
-  .mini .k{color:var(--muted);font-size:13px;margin-bottom:6px;}
-  .mini .v{font-size:26px;font-weight:800;}
-  .mini.small .v{font-size:20px;}
-  .ganancia-win{color:#16a34a;}
-  .ganancia-lose{color:#991b1b;}
-  .ganancia-tie{color:#92400e;}
-  .orange{color:var(--orange);font-weight:800;}
-  .resultado-box{
-    margin:16px 0 0 0;
-    background:var(--bg);
-    color:#f8fafc;
-    border-radius:18px;
-    padding:18px;
-    min-height:280px;
-    font-family:Consolas, monospace;
-    font-size:14px;
-    line-height:1.55;
-    white-space:pre-wrap;
-  }
-  .foot{margin-top:14px;font-size:12px;color:var(--muted);}
-  @media (max-width:860px){
-    .content{grid-template-columns:1fr;}
-    .right{border-left:none;border-top:1px solid var(--line);}
-    .grid{grid-template-columns:1fr;}
-    .hero h1{font-size:28px;}
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compra de Divisas</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        .phone-container {
+            background-color: #1e1e1e;
+            width: 100%;
+            max-width: 412px;
+            height: 892px;
+            border-radius: 36px;
+            padding: 16px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            border: 4px solid #2d2d2d;
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            padding: 4px 12px 12px 12px;
+            font-weight: 500;
+        }
+
+        .status-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .battery-icon {
+            background-color: #ffffff;
+            color: #1e1e1e;
+            font-size: 0.65rem;
+            padding: 1px 4px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding: 0 4px;
+        }
+
+        .header h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.3rem;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background-color: #b30e3f;
+            color: white;
+            font-size: 0.65rem;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .form-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 2px;
+        }
+
+        .form-scroll::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-top: 12px;
+            margin-bottom: 6px;
+        }
+
+        .input-group label {
+            position: absolute;
+            top: -9px;
+            left: 12px;
+            background-color: #1e1e1e;
+            padding: 0 6px;
+            font-size: 0.78rem;
+            color: #8e8e93;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            background-color: transparent;
+            border: 1.5px solid #4a4a4a;
+            border-radius: 12px;
+            padding: 15px 14px;
+            color: #ffffff;
+            font-size: 1.05rem;
+            outline: none;
+            appearance: none;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            border-color: #b30e3f;
+        }
+
+        .input-group.select-wrapper::after {
+            content: '▼';
+            font-size: 0.65rem;
+            color: #8e8e93;
+            position: absolute;
+            right: 16px;
+            top: 52%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        select option {
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+
+        .sub-info {
+            font-size: 0.92rem;
+            color: #ffffff;
+            margin-bottom: 18px;
+            padding-left: 4px;
+            display: none; 
+        }
+
+        .exchange-rate {
+            color: #c92a52;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin: 16px 0;
+            padding-left: 4px;
+        }
+
+        .monto-input {
+            text-align: right;
+            color: #ffffff !important;
+            font-weight: 500;
+        }
+
+        .alert-text {
+            color: #b30e3f;
+            font-size: 0.78rem;
+            margin-bottom: 20px;
+            line-height: 1.3;
+            padding-left: 4px;
+        }
+
+        .seccion-oculta {
+            display: none !important;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 16px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #b30e3f;
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: #3a3a3c;
+            color: white;
+        }
+
+        /* MODAL DE CONFIRMACIÓN */
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 24px;
+        }
+
+        .modal-box {
+            background-color: #242424;
+            border-radius: 24px;
+            padding: 28px 24px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.7);
+            border: 1px solid #3a3a3c;
+        }
+
+        .modal-box h2 {
+            font-size: 1.35rem;
+            margin-bottom: 24px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+
+        /* PANTALLA DE ÉXITO FINAL */
+        .success-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 24px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .success-icon {
+            width: 76px;
+            height: 76px;
+            background-color: #248a3d;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.4rem;
+            margin-bottom: 24px;
+            box-shadow: 0 0 20px rgba(36, 138, 61, 0.5);
+            animation: pulseIcon 2s infinite;
+        }
+
+        @keyframes pulseIcon {
+            0% { box-shadow: 0 0 0 0 rgba(36, 138, 61, 0.6); }
+            70% { box-shadow: 0 0 0 15px rgba(36, 138, 61, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(36, 138, 61, 0); }
+        }
+
+        .success-screen h2 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .success-screen p {
+            color: #aaaaaa;
+            font-size: 1.05rem;
+            margin-bottom: 28px;
+        }
+
+        /* DISEÑO DE CONTENEDOR DE TIEMPO LLAMATIVO Y COLORIDO */
+        .time-box-container {
+            background: linear-gradient(135deg, #2d131a 0%, #1e1e1e 100%);
+            border: 2px solid #b30e3f;
+            border-radius: 20px;
+            padding: 20px 24px;
+            width: 100%;
+            max-width: 320px;
+            box-shadow: 0 8px 25px rgba(179, 14, 63, 0.25);
+            text-align: center;
+        }
+
+        .time-box-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #ff85a2;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .time-box-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #ffcc00; /* Amarillo brillante y llamativo */
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 10px rgba(255, 204, 0, 0.3);
+        }
+
+        .nav-bar {
+            border-top: 1px solid #2d2d2d;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-top: 10px;
+            padding-bottom: 8px;
+            background-color: #1e1e1e;
+            margin-left: -20px;
+            margin-right: -20px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #a2a2a2;
+            font-size: 0.68rem;
+            cursor: pointer;
+            gap: 4px;
+            width: 16%;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .nav-item.active {
+            color: #b30e3f;
+        }
+
+        .nav-item svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+
+        .home-indicator {
+            width: 140px;
+            height: 4px;
+            background-color: #ffffff;
+            border-radius: 2px;
+            margin: 4px auto 0 auto;
+        }
+    </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="shell">
-    <div class="hero">
-      <h1>Calculadora USDT Venezuela</h1>
-      <p>Solo USDT y bolívares. Sin pesos colombianos.</p>
+
+<div class="phone-container">
+    <div class="status-bar">
+        <div>7:33</div>
+        <div class="status-right">
+            <span>📶</span>
+            <span style="font-size: 0.75rem;">5G</span>
+            <span class="battery-icon">64</span>
+        </div>
     </div>
 
-    <div class="content">
-      <div class="left">
-        <div class="grid">
-          <div class="field">
-            <label for="dolares_base">Monto base en USDT</label>
-            <input id="dolares_base" type="text" placeholder="Ejemplo: 1000">
-          </div>
-
-          <div class="field">
-            <label for="bolivar_usd">Precio del bolívar por USDT en Binance</label>
-            <input id="bolivar_usd" type="text" placeholder="Ejemplo: 670">
-          </div>
-
-          <div class="field full">
-            <label for="tasa_subasta">Tasa de intervención del banco</label>
-            <input id="tasa_subasta" type="text" placeholder="Ejemplo: 611">
-            <div class="hint">Acepta formatos como 1000, 1.000, 1,000, 1.000,50 o 1000.50</div>
-          </div>
-        </div>
-
-        <div class="btns">
-          <button class="primary" onclick="calcular()">Calcular</button>
-          <button class="secondary" onclick="limpiarFormulario()">Limpiar</button>
-          <button class="success" onclick="copiarResultado()">Copiar resultado</button>
-        </div>
-
-        <div id="estado" class="status"></div>
-        <div id="resultado" class="resultado-box">Aquí aparecerán los resultados.</div>
-
-        <div class="foot">
-          Comisiones usadas: Banco 2,5 % + Binance 3,6 %. Comisión de compra en bolívares: 0,5 %.
-        </div>
-      </div>
-
-      <div class="right">
-        <div class="cards">
-          <div class="mini">
-            <div class="k">Ganancia final</div>
-            <div class="v" id="ganancia_card">-</div>
-          </div>
-
-          <div class="mini">
-            <div class="k">Rentabilidad</div>
-            <div class="v" id="rentabilidad_card">-</div>
-          </div>
-
-          <div class="mini small">
-            <div class="k">Bolívares equivalentes en Binance</div>
-            <div class="v orange" id="costo_real_card">-</div>
-          </div>
-
-          <div class="mini small">
-            <div class="k">USDT finales después de comisiones</div>
-            <div class="v orange" id="usd_finales_card">-</div>
-          </div>
-
-          <div class="mini small">
-            <div class="k">Comisión banco</div>
-            <div class="v" id="comision_banco_card">2,5 %</div>
-          </div>
-
-          <div class="mini small">
-            <div class="k">Comisión Binance</div>
-            <div class="v" id="comision_binance_card">3,6 %</div>
-          </div>
-
-          <div class="mini small">
-            <div class="k">Comisión compra</div>
-            <div class="v" id="comision_compra_card">0,5 %</div>
-          </div>
-        </div>
-      </div>
+    <div class="header" id="appHeader">
+        <button class="icon-btn">
+            🔔
+            <div class="badge">2</div>
+        </button>
+        <h1>Compra de divisas</h1>
+        <button class="icon-btn">☰</button>
     </div>
-  </div>
+
+    <div class="form-scroll" id="mainFormScroll">
+        <form id="divisasForm" onsubmit="event.preventDefault();">
+            
+            <div id="bloqueParte1">
+                <div class="input-group select-wrapper">
+                    <label>Cuenta a debitar:</label>
+                    <select id="cuentaDebitar" required>
+                        <option value="" disabled selected hidden>Seleccione una cuenta</option>
+                        <option value="5006" data-saldo="319.966,41 Bs">0102****5006</option>
+                    </select>
+                </div>
+                <div id="saldoDebitar" class="sub-info">Saldo disponible: --</div>
+
+                <div class="input-group select-wrapper">
+                    <label>Cuenta destino:</label>
+                    <select id="cuentaDestino" required>
+                        <option value="" disabled selected hidden>Seleccione una cuenta</option>
+                        <option value="4886" data-saldo="1,44 $">0102****4886</option>
+                    </select>
+                </div>
+                <div id="saldoDestino" class="sub-info">Saldo disponible: --</div>
+
+                <div class="exchange-rate">
+                    Tasa de cambio USD: 615.52 Bs.
+                </div>
+
+                <div class="input-group">
+                    <label>Monto:</label>
+                    <input type="text" id="montoInput" class="monto-input" value="0,00" required>
+                </div>
+                <div class="alert-text">
+                    Monto máximo para la compra de divisas por operación es de 500.00 $
+                </div>
+
+                <div class="btn-container" id="containerBtnContinuar">
+                    <button type="button" id="btnContinuar" class="btn btn-primary">Continuar</button>
+                </div>
+            </div>
+
+            <div id="bloqueParte2" class="seccion-oculta">
+                <div class="input-group select-wrapper" style="margin-bottom: 20px;">
+                    <select id="destinoFondos" required>
+                        <option value="" disabled selected hidden>Destino de los fondos</option>
+                        <option value="ahorro">Ahorro / Inversión</option>
+                        <option value="gastos">Gastos Personales / Familiares</option>
+                        <option value="proveedores">Pago a Proveedores</option>
+                        <option value="salud">Gastos Médicos / Salud</option>
+                        <option value="estudios">Educación / Estudios</option>
+                        <option value="viajes">Viajes / Turismo</option>
+                        <option value="vivienda">Adquisición / Remodelación de Vivienda</option>
+                        <option value="vehiculo">Compra / Mantenimiento de Vehículo</option>
+                        <option value="servicios">Pago de Servicios Públicos / Privados</option>
+                        <option value="negocio">Inyección de Capital / Emprendimiento</option>
+                        <option value="tarjetas">Pago de Tarjetas de Crédito / Deudas</option>
+                        <option value="otros">Otros</option>
+                    </select>
+                </div>
+
+                <div class="input-group select-wrapper" style="margin-bottom: 20px;">
+                    <select id="actividadEconomica" required>
+                        <option value="" disabled selected hidden>Actividad Economica:</option>
+                        <option value="asalariado">Asalariado / Empleado</option>
+                        <option value="independiente">Profesional Independiente</option>
+                        <option value="comercio">Comerciante / Ventas</option>
+                        <option value="empresario">Empresario / Socio</option>
+                        <option value="docencia">Docente / Profesor</option>
+                        <option value="tecnologia">Desarrollador / Tecnología / Freelancer</option>
+                        <option value="salud_prof">Personal de Salud / Médico</option>
+                        <option value="construccion">Construcción / Oficios Manuales</option>
+                        <option value="transporte">Transportista / Conductor</option>
+                        <option value="estudiante">Estudiante</option>
+                        <option value="agricultura">Agricultura / Ganadería / Pesca</option>
+                        <option value="manufactura">Industria Manufacturera / Fábricas</option>
+                        <option value="turismo">Hostelería / Turismo / Restaurantes</option>
+                        <option value="arte">Artista / Diseñador / Entretenimiento</option>
+                        <option value="seguridad">Servicios de Seguridad / Vigilancia</option>
+                        <option value="jubilado">Jubilado / Pensionado</option>
+                        <option value="servicios">Otras actividades del servicio</option>
+                        <option value="desempleado">Sin actividad económica laboral</option>
+                        <option value="hogar">Labores del Hogar / Ama de casa</option>
+                    </select>
+                </div>
+
+                <div class="btn-container">
+                    <button type="button" id="btnDispararConfirmacion" class="btn btn-primary">Continuar</button>
+                    <button type="button" id="btnCancelar" class="btn btn-secondary">Regresar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div id="modalConfirmacion" class="modal-overlay seccion-oculta">
+        <div class="modal-box">
+            <h2>¿Desea realizar la compra?</h2>
+            <div class="btn-container">
+                <button type="button" id="btnConfirmarFinal" class="btn btn-primary">Continuar</button>
+                <button type="button" id="btnCerrarModal" class="btn btn-secondary">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="pantallaExito" class="success-screen seccion-oculta">
+        <div class="success-icon">✓</div>
+        <h2>Compra exitosa</h2>
+        <p>Su transacción ha sido procesada.</p>
+        
+        <div class="time-box-container">
+            <div class="time-box-title">Tiempo de ejecución</div>
+            <div class="time-box-value" id="txtTiempoTranscurrido">0 segundos</div>
+        </div>
+    </div>
+
+    <div class="nav-bar">
+        <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Inicio</div>
+        <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg>Transfere...</div>
+        <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>Pagos</div>
+        <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/></svg>Servicios</div>
+        <div class="nav-item active"><svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>Divisas</div>
+        <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.1.89 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V12h16v6zm0-10H4V6h16v2z"/></svg>Tarjeta</div>
+    </div>
+    <div class="home-indicator"></div>
 </div>
 
 <script>
-var ultimoResultadoTexto = "";
+    const tiempoInicio = Date.now();
 
-function limpiarNumero(texto){
-  texto = String(texto).replace(/\s/g, "");
+    const cuentaDebitar = document.getElementById('cuentaDebitar');
+    const saldoDebitar = document.getElementById('saldoDebitar');
+    cuentaDebitar.addEventListener('change', function() {
+        const option = this.options[this.selectedIndex];
+        if(option.value) {
+            saldoDebitar.innerText = "Saldo disponible: " + option.getAttribute('data-saldo');
+            saldoDebitar.style.display = "block";
+        }
+    });
 
-  if (texto === "") {
-    throw new Error("Hay campos vacíos.");
-  }
+    const cuentaDestino = document.getElementById('cuentaDestino');
+    const saldoDestino = document.getElementById('saldoDestino');
+    cuentaDestino.addEventListener('change', function() {
+        const option = this.options[this.selectedIndex];
+        if(option.value) {
+            saldoDestino.innerText = "Saldo disponible: " + option.getAttribute('data-saldo');
+            saldoDestino.style.display = "block";
+        }
+    });
 
-  var tienePunto = texto.indexOf(".") !== -1;
-  var tieneComa = texto.indexOf(",") !== -1;
+    const montoInput = document.getElementById('montoInput');
 
-  if (tienePunto && tieneComa){
-    if (texto.lastIndexOf(",") > texto.lastIndexOf(".")){
-      texto = texto.replace(/\./g, "");
-      texto = texto.replace(",", ".");
-    } else {
-      texto = texto.replace(/,/g, "");
-    }
-  } else if (tieneComa){
-    texto = texto.replace(/\./g, "");
-    texto = texto.replace(",", ".");
-  } else if (tienePunto){
-    var partes = texto.split(".");
-    if (partes.length > 2){
-      texto = texto.replace(/\./g, "");
-    } else if (partes.length === 2 && partes[1].length === 3){
-      texto = texto.replace(/\./g, "");
-    }
-  }
+    montoInput.addEventListener('input', function() {
+        let posCursorAnterior = this.selectionStart;
+        let longitudAnterior = this.value.length;
 
-  var valor = parseFloat(texto);
+        let digitos = this.value.replace(/\D/g, '');
 
-  if (isNaN(valor)) {
-    throw new Error("Hay un dato inválido.");
-  }
+        if (!digitos || digitos === '' || parseInt(digitos, 10) === 0) {
+            this.value = '0,00';
+            this.setSelectionRange(this.value.length, this.value.length);
+            return;
+        }
 
-  return valor;
-}
+        let valorNumerico = parseInt(digitos, 10);
+        let centavos = valorNumerico % 100;
+        let enteros = Math.floor(valorNumerico / 100);
 
-function formatoDecimal(valor, decimales){
-  var negativo = valor < 0;
-  valor = Math.abs(valor);
+        let stringCentavos = centavos.toString().padStart(2, '0');
+        let stringEnteros = enteros.toLocaleString('es-ES');
 
-  var fijo = valor.toFixed(decimales);
-  var partes = fijo.split(".");
-  var entero = partes[0];
-  var decimal = partes.length > 1 ? partes[1] : "";
-  var out = "";
+        let nuevoValor = stringEnteros + ',' + stringCentavos;
+        this.value = nuevoValor;
 
-  while (entero.length > 3){
-    out = "." + entero.slice(-3) + out;
-    entero = entero.slice(0, -3);
-  }
+        let diferenciaLongitud = nuevoValor.length - longitudAnterior;
+        let nuevaPosCursor = posCursorAnterior + diferenciaLongitud;
 
-  out = entero + out;
+        if (nuevaPosCursor < 0) nuevaPosCursor = 0;
+        if (nuevaPosCursor > nuevoValor.length) nuevaPosCursor = nuevoValor.length;
 
-  return (negativo ? "-" : "") + out + (decimales > 0 ? "," + decimal : "");
-}
+        this.setSelectionRange(nuevaPosCursor, nuevaPosCursor);
+    });
 
-function setEstado(tipo, texto){
-  var box = document.getElementById("estado");
-  box.className = "status " + tipo;
-  box.textContent = texto;
-}
+    const btnContinuar = document.getElementById('btnContinuar');
+    const containerBtnContinuar = document.getElementById('containerBtnContinuar');
+    const bloqueParte2 = document.getElementById('bloqueParte2');
+    
+    const destinoFondos = document.getElementById('destinoFondos');
+    const actividadEconomica = document.getElementById('actividadEconomica');
 
-function calcular(){
-  try{
-    var dolares_base = limpiarNumero(document.getElementById("dolares_base").value);
-    var bolivar_usd = limpiarNumero(document.getElementById("bolivar_usd").value);
-    var tasa_subasta = limpiarNumero(document.getElementById("tasa_subasta").value);
+    const btnDispararConfirmacion = document.getElementById('btnDispararConfirmacion');
+    const modalConfirmacion = document.getElementById('modalConfirmacion');
+    const btnCerrarModal = document.getElementById('btnCerrarModal');
+    const btnConfirmarFinal = document.getElementById('btnConfirmarFinal');
 
-    if (dolares_base <= 0 || bolivar_usd <= 0 || tasa_subasta <= 0){
-      throw new Error("Todos los valores deben ser mayores que cero.");
-    }
+    const mainFormScroll = document.getElementById('mainFormScroll');
+    const appHeader = document.getElementById('appHeader');
+    const pantallaExito = document.getElementById('pantallaExito');
+    const txtTiempoTranscurrido = document.getElementById('txtTiempoTranscurrido');
 
-    var bolivares_intervencion = dolares_base * tasa_subasta;
+    btnContinuar.addEventListener('click', function() {
+        if(!cuentaDebitar.value || !cuentaDestino.value || !montoInput.value || montoInput.value === '0,00') {
+            alert('Por favor complete los campos de cuentas y un monto válido antes de continuar.');
+            return;
+        }
+        containerBtnContinuar.style.display = 'none';
+        bloqueParte2.classList.remove('seccion-oculta');
+    });
 
-    var comision_compra = 0.5;
-    var comision_compra_bs = bolivares_intervencion * (comision_compra / 100);
+    document.getElementById('btnCancelar').addEventListener('click', function() {
+        bloqueParte2.classList.add('seccion-oculta');
+        containerBtnContinuar.style.display = 'flex';
+    });
 
-    var total_bolivares_pagados = bolivares_intervencion + comision_compra_bs;
-    var costo_real_usdt = total_bolivares_pagados / bolivar_usd;
+    btnDispararConfirmacion.addEventListener('click', function() {
+        if(!destinoFondos.value || !actividadEconomica.value) {
+            alert('Por favor seleccione el destino de los fondos y su actividad económica.');
+            return;
+        }
+        modalConfirmacion.classList.remove('seccion-oculta');
+    });
 
-    var comision_banco = 2.5;
-    var comision_binance = 3.6;
-    var comision_total_usd = comision_banco + comision_binance;
+    btnCerrarModal.addEventListener('click', function() {
+        modalConfirmacion.classList.add('seccion-oculta');
+    });
 
-    var usd_finales = dolares_base * (1 - comision_total_usd / 100);
-    var ganancia_usdt = usd_finales - costo_real_usdt;
-    var porcentaje_ganancia = (ganancia_usdt / costo_real_usdt) * 100;
+    btnConfirmarFinal.addEventListener('click', function() {
+        modalConfirmacion.classList.add('seccion-oculta');
+        mainFormScroll.style.display = 'none';
+        appHeader.style.display = 'none';
+        
+        const tiempoFin = Date.now();
+        const segundosTotales = Math.floor((tiempoFin - tiempoInicio) / 1000);
+        
+        let stringTiempo = "";
+        if (segundosTotales >= 60) {
+            let minutes = Math.floor(segundosTotales / 60);
+            let seconds = segundosTotales % 60;
+            stringTiempo = `${minutes} min ${seconds} s`;
+        } else {
+            stringTiempo = `${segundosTotales} segundos`;
+        }
 
-    if (ganancia_usdt > 0){
-      setEstado("win", "🟢 Estás ganando dinero en esta operación.");
-    } else if (ganancia_usdt < 0){
-      setEstado("lose", "🔴 Estás perdiendo dinero en esta operación.");
-    } else {
-      setEstado("tie", "🟡 Estás exactamente en tablas.");
-    }
-
-    var gananciaCard = document.getElementById("ganancia_card");
-    gananciaCard.textContent = formatoDecimal(ganancia_usdt, 2) + " USDT";
-    gananciaCard.className = "v " + (ganancia_usdt > 0 ? "ganancia-win" : (ganancia_usdt < 0 ? "ganancia-lose" : "ganancia-tie"));
-
-    document.getElementById("rentabilidad_card").textContent = formatoDecimal(porcentaje_ganancia, 2) + "%";
-    document.getElementById("usd_finales_card").textContent = formatoDecimal(usd_finales, 2) + " USDT";
-    document.getElementById("costo_real_card").textContent = formatoDecimal(costo_real_usdt, 2) + " USDT";
-
-    document.getElementById("comision_banco_card").textContent = formatoDecimal(comision_banco, 1) + " %";
-    document.getElementById("comision_binance_card").textContent = formatoDecimal(comision_binance, 1) + " %";
-    document.getElementById("comision_compra_card").textContent = formatoDecimal(comision_compra, 1) + " %";
-
-    var salidaTexto = "";
-    salidaTexto += "=======================================================\n";
-    salidaTexto += "RESULTADOS\n";
-    salidaTexto += "=======================================================\n\n";
-
-    salidaTexto += "Si compras " + formatoDecimal(dolares_base, 2) + " USDT a una tasa de " + formatoDecimal(tasa_subasta, 2) + " Bs/USD\n";
-    salidaTexto += "Pagas en intervención: " + formatoDecimal(bolivares_intervencion, 2) + " Bs\n";
-    salidaTexto += "Comisión de compra(" + formatoDecimal(comision_compra, 1) + "%): " + formatoDecimal(comision_compra_bs, 2) + " Bs\n";
-    salidaTexto += "Total bolívares a pagar: " + formatoDecimal(total_bolivares_pagados, 2) + " Bs\n\n";
-
-    salidaTexto += "Al precio de Binance esos bolívares equivalen a: " + formatoDecimal(costo_real_usdt, 2) + " USDT\n\n";
-
-    salidaTexto += "Comisiones del proceso:\n";
-    salidaTexto += "- Banco: " + formatoDecimal(comision_banco, 1) + " %\n";
-    salidaTexto += "- Binance: " + formatoDecimal(comision_binance, 1) + " %\n\n";
-
-    salidaTexto += "USDT finales después de comisiones: " + formatoDecimal(usd_finales, 2) + " USDT\n\n";
-    salidaTexto += "Costo real de la operación: " + formatoDecimal(costo_real_usdt, 2) + " USDT\n\n\n";
-
-    salidaTexto += "Ganancia final: " + formatoDecimal(ganancia_usdt, 2) + " USDT\n\n";
-    salidaTexto += "Rentabilidad: " + formatoDecimal(porcentaje_ganancia, 2) + "%\n";
-    salidaTexto += "=======================================================";
-
-    ultimoResultadoTexto = salidaTexto;
-
-    var salidaHtml = "";
-    salidaHtml += "=======================================================\n";
-    salidaHtml += "RESULTADOS\n";
-    salidaHtml += "=======================================================\n\n";
-
-    salidaHtml += "Si compras " + formatoDecimal(dolares_base, 2) + " USDT a una tasa de " + formatoDecimal(tasa_subasta, 2) + " Bs/USD\n";
-    salidaHtml += "Pagas en intervención: " + formatoDecimal(bolivares_intervencion, 2) + " Bs\n";
-    salidaHtml += "Comisión de compra(" + formatoDecimal(comision_compra, 1) + "%): " + formatoDecimal(comision_compra_bs, 2) + " Bs\n";
-    salidaHtml += "Total bolívares a pagar: " + formatoDecimal(total_bolivares_pagados, 2) + " Bs\n\n";
-
-    salidaHtml += 'Al precio de Binance esos bolívares equivalen a: <span class="orange">' + formatoDecimal(costo_real_usdt, 2) + " USDT</span>\n\n";
-
-    salidaHtml += "Comisiones del proceso:\n";
-    salidaHtml += "- Banco: " + formatoDecimal(comision_banco, 1) + " %\n";
-    salidaHtml += "- Binance: " + formatoDecimal(comision_binance, 1) + " %\n\n";
-
-    salidaHtml += 'USDT finales después de comisiones: <span class="orange">' + formatoDecimal(usd_finales, 2) + " USDT</span>\n\n";
-    salidaHtml += "Costo real de la operación: " + formatoDecimal(costo_real_usdt, 2) + " USDT\n\n\n";
-
-    salidaHtml += "Ganancia final: " + formatoDecimal(ganancia_usdt, 2) + " USDT\n\n";
-    salidaHtml += "Rentabilidad: " + formatoDecimal(porcentaje_ganancia, 2) + "%\n";
-    salidaHtml += "=======================================================";
-
-    document.getElementById("resultado").innerHTML = salidaHtml;
-
-  } catch (e){
-    setEstado("lose", "Error: " + e.message);
-    ultimoResultadoTexto = "";
-
-    document.getElementById("resultado").textContent =
-      "Escribe los números así:\n" +
-      "- 1000\n" +
-      "- 1.000\n" +
-      "- 1,000\n" +
-      "- 1.000,50\n" +
-      "- 1000.50\n\n" +
-      "Luego pulsa Calcular.";
-  }
-}
-
-function limpiarFormulario(){
-  document.getElementById("dolares_base").value = "";
-  document.getElementById("bolivar_usd").value = "";
-  document.getElementById("tasa_subasta").value = "";
-
-  document.getElementById("resultado").textContent = "Aquí aparecerán los resultados.";
-  ultimoResultadoTexto = "";
-
-  var gananciaCard = document.getElementById("ganancia_card");
-  gananciaCard.textContent = "-";
-  gananciaCard.className = "v";
-
-  document.getElementById("rentabilidad_card").textContent = "-";
-  document.getElementById("usd_finales_card").textContent = "-";
-  document.getElementById("costo_real_card").textContent = "-";
-
-  document.getElementById("comision_banco_card").textContent = "2,5 %";
-  document.getElementById("comision_binance_card").textContent = "3,6 %";
-  document.getElementById("comision_compra_card").textContent = "0,5 %";
-
-  document.getElementById("estado").className = "status";
-  document.getElementById("estado").textContent = "";
-}
-
-function copiarResultado(){
-  var texto = ultimoResultadoTexto || document.getElementById("resultado").textContent;
-
-  if (!texto || texto === "Aquí aparecerán los resultados."){
-    alert("Primero calcula un resultado.");
-    return;
-  }
-
-  if (navigator.clipboard && window.isSecureContext){
-    navigator.clipboard.writeText(texto)
-      .then(function(){
-        alert("Resultado copiado.");
-      })
-      .catch(function(){
-        copiarFallback(texto);
-      });
-  } else {
-    copiarFallback(texto);
-  }
-}
-
-function copiarFallback(texto){
-  var area = document.createElement("textarea");
-  area.value = texto;
-  document.body.appendChild(area);
-  area.select();
-
-  try{
-    document.execCommand("copy");
-    alert("Resultado copiado.");
-  } catch(e){
-    alert("No se pudo copiar automáticamente.");
-  }
-
-  document.body.removeChild(area);
-}
+        txtTiempoTranscurrido.innerText = stringTiempo;
+        pantallaExito.classList.remove('seccion-oculta');
+    });
 </script>
+
 </body>
 </html>
